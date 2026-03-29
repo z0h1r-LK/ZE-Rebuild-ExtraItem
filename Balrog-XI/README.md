@@ -1,8 +1,8 @@
 # <center>Balrog-XI</center>
 
-<center>
+<div align="center">
 <img src="https://i.ibb.co/3m2BWQDL/Balrog-XI-Thumbnail.png" alt="Thumbnail" />
-</center>
+</div>
 
 ## – Description :
 - Based on XM-1014, Balrog Charging System will generate an incendiary round for each four shells shot in quick succession, with a maximum of seven incendiary shells which can be used as secondary fire.
