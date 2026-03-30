@@ -93,7 +93,7 @@ public plugin_precache()
 	precache_model_s(g_v_szWeaponModel)
 	precache_model_s(g_w_szWeaponModel)
 
-	g_flMaxFrames = float(engfunc(EngFunc_ModelFrames, precache_model_s(g_szFlameSprite)))
+	g_flMaxFrames = float( engfunc(EngFunc_ModelFrames, precache_model_s(g_szFlameSprite)) )
 
 	precache_sound(g_szWeaponFireSound)
 
@@ -127,6 +127,7 @@ public plugin_init()
 	RegisterHookChain(RG_CWeaponBox_SetModel, "fw_WeaponBox_SetModel_Pre")
 
 	// Hams.
+	RegisterHam(Ham_Spawn, WEAPON_REFERENCE, "fw_Weapon_Spawn_Post", 1)
 	RegisterHam(Ham_Weapon_WeaponIdle, WEAPON_REFERENCE, "fw_Weapon_WeaponIdle_Pre")
 	RegisterHam(Ham_Weapon_PrimaryAttack, WEAPON_REFERENCE, "fw_Weapon_PrimaryAttack_Pre")
 	RegisterHam(Ham_Item_AddToPlayer, WEAPON_REFERENCE, "fw_Weapon_AddToPlayer_Post", 1)
@@ -249,6 +250,15 @@ public fw_WeaponBox_SetModel_Pre(const entWpn, const szModel[])
 
 	if (FIsCustomWeapon(get_member(entWpn, m_WeaponBox_rgpPlayerItems, PRIMARY_WEAPON_SLOT)))
 		SetHookChainArg(2, ATYPE_STRING, g_w_szWeaponModel)
+}
+
+public fw_Weapon_Spawn_Post(const entWpn)
+{
+	if (!FIsCustomWeapon(entWpn))
+		return
+
+	rg_set_iteminfo(entWpn, ItemInfo_iMaxClip, WEAPON_MAXCLIP)
+	rg_set_iteminfo(entWpn, ItemInfo_iMaxAmmo1, WEAPON_MAXAMMO)
 }
 
 public fw_Weapon_WeaponIdle_Pre(const entWpn)
