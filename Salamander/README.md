@@ -13,7 +13,7 @@
 
 ## – INI Settings :
 ```ini
-[Blaster]
+[Salamander]
 NAME = Salamander
 COST = 50
 LIMIT = 3
