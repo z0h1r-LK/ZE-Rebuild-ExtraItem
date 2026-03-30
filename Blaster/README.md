@@ -1,4 +1,4 @@
-# <center>Balrog-XI</center>
+# Blaster
 
 <div align="center">
 <img src="https://i.ibb.co/vC0W42zZ/Thumb.jpg" alt="Thumbnail" />
