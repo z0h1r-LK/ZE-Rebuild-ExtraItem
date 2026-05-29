@@ -150,7 +150,7 @@ public plugin_precache()
 public plugin_init()
 {
 	// Load Plug-In.
-	register_plugin("[ZE] Extra Item: Balrog-XI", "1.0", "z0h1r-LK")
+	register_plugin("[ZE] Extra Item: Balrog-XI", "1.1", "z0h1r-LK")
 
 	// Events.
 	register_event("HLTV", "fw_NewRound_Event", "a", "1=0", "2=0")
@@ -601,7 +601,7 @@ public fw_FlameTouch_Pre(const entID, const pevOther)
 		set_entvar(entID, var_movetype, MOVETYPE_NONE)
 	}
 
-	if (!is_user_alive(iAttacker) || !ze_is_user_zombie(pevOther) || pevOther == iAttacker)
+	if (!is_user_alive(pevOther) || !ze_is_user_zombie(pevOther) || pevOther == iAttacker)
 	{
 		return HC_CONTINUE
 	}
