@@ -1,4 +1,4 @@
-# Blaster
+# Black Dragon Cannon
 
 <div align="center">
 <img src="https://i.ibb.co/nq6KzHkq/Half-Life02-1.jpg" alt="Thumbnail" />

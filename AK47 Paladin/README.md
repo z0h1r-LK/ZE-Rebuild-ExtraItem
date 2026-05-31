@@ -1,4 +1,4 @@
-# Salamander
+# AK-47 Paladin
 
 <div align="center">
 	<img src="https://i.ibb.co/3Y5ZBXgN/Thumb.jpg" alt="Thumbnail" />

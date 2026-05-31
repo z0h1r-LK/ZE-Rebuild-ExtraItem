@@ -1,4 +1,4 @@
-# <center>Balrog-XI</center>
+# Balrog-XI
 
 <div align="center">
 <img src="https://i.ibb.co/3m2BWQDL/Balrog-XI-Thumbnail.png" alt="Thumbnail" />
@@ -26,4 +26,3 @@ V_BALROGXI = models/CSO/v_balrog11.mdl
 P_BALROGXI = models/CSO/p_balrog11.mdl
 W_BALROGXI = models/CSO/w_balrog11.mdl
 ```
-
