@@ -120,6 +120,7 @@ public plugin_init()
 	RegisterHookChain(RG_CWeaponBox_SetModel, "fw_WeaponBox_SetModel")
 
 	// Hams.
+	RegisterHam(Ham_Spawn, WEAPON_REFERENCE, "fw_Weapon_Spawn_Post", 1)
 	RegisterHam(Ham_Weapon_WeaponIdle, WEAPON_REFERENCE, "fw_Weapon_WeaponIdle_Pre")
 	RegisterHam(Ham_Weapon_PrimaryAttack, WEAPON_REFERENCE, "fw_Weapon_PrimaryAttack_Pre")
 	RegisterHam(Ham_Item_AttachToPlayer, WEAPON_REFERENCE, "fw_Weapon_AttachToPlayer_Post", 1)
@@ -178,18 +179,11 @@ public ze_select_item_post(id, iItem, bool:bIgnoreCost)
 
 public give_DragonCannon(const iPlayer)
 {
-	new iWpnEnt
-	if ((iWpnEnt = rg_give_custom_item(iPlayer, WEAPON_REFERENCE, GT_DROP_AND_REPLACE, WEAPON_UID)) == NULLENT)
+	if (rg_give_custom_item(iPlayer, WEAPON_REFERENCE, GT_DROP_AND_REPLACE, WEAPON_UID) == NULLENT)
 	{
 		log_error(AMX_ERR_GENERAL, "[ZE] Error while giving the weapon to the player (id: %d)", iPlayer)
 		return
 	}
-
-	set_member(iWpnEnt, m_Weapon_iClip, NULLENT)
-	set_member(iWpnEnt, m_Weapon_iDefaultAmmo, WEAPON_MAXAMMO)
-
-	rg_set_iteminfo(iWpnEnt, ItemInfo_iMaxClip, NULLENT)
-	rg_set_iteminfo(iWpnEnt, ItemInfo_iMaxAmmo1, WEAPON_MAXAMMO)
 
 	rg_set_user_bpammo(iPlayer, WeaponIdType:WEAPON_ID, WEAPON_MAXAMMO)
 }
@@ -259,6 +253,18 @@ public fw_RemovePlayerItem_Post(const iPlayer, const iWpnEnt)
 
 	set_member(iWpnEnt, m_Weapon_fInSpecialReload, 0)
 	send_WeaponList_msg(iPlayer)
+}
+
+public fw_Weapon_Spawn_Post(const iWpnEnt)
+{
+	if (!is_DragonCannon(iWpnEnt))
+		return
+
+	set_member(iWpnEnt, m_Weapon_iClip, NULLENT)
+	set_member(iWpnEnt, m_Weapon_iDefaultAmmo, WEAPON_MAXAMMO)
+
+	rg_set_iteminfo(iWpnEnt, ItemInfo_iMaxClip, NULLENT)
+	rg_set_iteminfo(iWpnEnt, ItemInfo_iMaxAmmo1, WEAPON_MAXAMMO)
 }
 
 public fw_Weapon_WeaponIdle_Pre(const iWpnEnt)
