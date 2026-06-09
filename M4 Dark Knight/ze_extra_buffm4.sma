@@ -81,8 +81,6 @@ new g_w_szWeaponModel[MAX_RESOURCE_PATH_LENGTH] = "models/CSO/w_buffm4.mdl"
 
 new const g_szFireSound[FIRE_SOUNDS][] = { "weapons/CSO/m4a1buff-1.wav", "weapons/CSO/m4a1buff-2.wav" }
 
-new const g_szTraceSprite[] = "sprites/trinity_cubes/snipers_beam.spr"
-
 #if MFLASH_STATUS == 1
 new const g_szMuzzleFlashSprite[] = "sprites/CSO/ef_buffm4_mflash.spr"
 #endif
@@ -162,6 +160,7 @@ public plugin_init()
 	RegisterHookChain(RG_CWeaponBox_SetModel, "fw_WeaponBox_SetModel_Pre")
 
 	// Hams.
+	RegisterHam(Ham_Spawn, WEAPON_REFERENCE, "fw_Weapon_Spawn_Post", 1)
 	RegisterHam(Ham_Weapon_WeaponIdle, WEAPON_REFERENCE, "fw_Weapon_WeaponIdle_Pre")
 	RegisterHam(Ham_Weapon_PrimaryAttack, WEAPON_REFERENCE, "fw_Weapon_PrimaryAttack_Pre")
 	RegisterHam(Ham_Weapon_SecondaryAttack, WEAPON_REFERENCE, "fw_Weapon_SecondaryAttack_Pre")
@@ -222,20 +221,11 @@ public ze_select_item_post(id, iItem, bool:bIgnoreCost)
 
 public give_M4DarkKnight(const iPlayer)
 {
-	new iWpnEnt
-	if ((iWpnEnt = rg_give_custom_item(iPlayer, WEAPON_REFERENCE, GT_DROP_AND_REPLACE, WEAPON_UID)) == NULLENT)
+	if (rg_give_custom_item(iPlayer, WEAPON_REFERENCE, GT_DROP_AND_REPLACE, WEAPON_UID) == NULLENT)
 	{
 		log_error(AMX_ERR_GENERAL, "[ZE] Invalid Weapon Index (-1)")
 		return
 	}
-
-	set_member(iWpnEnt, m_Weapon_iClip, WEAPON_MAXCLIP)
-	set_member(iWpnEnt, m_Weapon_flBaseDamage, WEAPON_DAMAGE)
-	set_member(iWpnEnt, m_Weapon_iDefaultAmmo, WEAPON_MAXAMMO)
-	set_member(iWpnEnt, m_Weapon_flAccuracy, WEAPON_ACCURACY)
-
-	rg_set_iteminfo(iWpnEnt, ItemInfo_iMaxClip, WEAPON_MAXCLIP)
-	rg_set_iteminfo(iWpnEnt, ItemInfo_iMaxAmmo1, WEAPON_MAXAMMO)
 
 	rg_set_user_bpammo(iPlayer, WeaponIdType:WEAPON_ID, WEAPON_MAXAMMO)
 }
@@ -261,6 +251,20 @@ public fw_UpdateClientData_Post(const id, sendweapons, cd_handle)
 	}
 
 	return FMRES_IGNORED
+}
+
+public fw_Weapon_Spawn_Post(const iWpnEnt)
+{
+	if (!is_Weap_BuffM4(iWpnEnt))
+		return
+
+	set_member(iWpnEnt, m_Weapon_iClip, WEAPON_MAXCLIP)
+	set_member(iWpnEnt, m_Weapon_flBaseDamage, WEAPON_DAMAGE)
+	set_member(iWpnEnt, m_Weapon_iDefaultAmmo, WEAPON_MAXAMMO)
+	set_member(iWpnEnt, m_Weapon_flAccuracy, WEAPON_ACCURACY)
+
+	rg_set_iteminfo(iWpnEnt, ItemInfo_iMaxClip, WEAPON_MAXCLIP)
+	rg_set_iteminfo(iWpnEnt, ItemInfo_iMaxAmmo1, WEAPON_MAXAMMO)
 }
 
 public fw_Weapon_AttachToPlayer_Post(const iWpnEnt, const iPlayer)
