@@ -112,7 +112,7 @@ public plugin_precache()
 public plugin_init()
 {
 	// Load Plug-In.
-	register_plugin("[ZE] Extra Item: Black Dragon Cannon", "1.0", "z0h1r-LK")
+	register_plugin("[ZE] Extra Item: Black Dragon Cannon", "1.1", "z0h1r-LK")
 
 	// Hook Chains.
 	RegisterHookChain(RG_CBasePlayerWeapon_DefaultDeploy, "fw_Weapon_DefaultDeploy_Pre")
